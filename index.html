@@ -244,7 +244,7 @@
   </section>
 </div>
 
-<button class="owner-toggle" id="ownerToggle">Owner sign in</button>
+<button class="owner-toggle" id="ownerToggle" style="display:none">Owner sign in</button>
 
 <div class="login-panel" id="loginPanel">
   <h4>Owner sign in</h4>
@@ -307,6 +307,7 @@
   let entries = [];
   let session = null;
   let busy = 0;
+  const showAdminEntry = new URLSearchParams(window.location.search).has("admin");
 
   function flashNotice(text, isError) {
     els.notice.innerHTML = `<div class="notice">${text}</div>`;
@@ -356,7 +357,7 @@
     els.count.textContent = `${entries.length} ${entries.length === 1 ? "photo" : "photos"}`;
     els.dropzone.style.display = session ? "flex" : "none";
     els.signOutBtn.style.display = session ? "inline" : "none";
-    els.ownerToggle.style.display = session ? "none" : "block";
+    els.ownerToggle.style.display = (session || !showAdminEntry) ? "none" : "block";
 
     if (entries.length === 0) {
       els.content.innerHTML = `<div class="empty"><h3>The journal is empty</h3><p>${session ? "Add your first photo above." : "Nothing has been posted yet."}</p></div>`;
